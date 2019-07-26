@@ -1,0 +1,7 @@
+- hosts:
+  tasks:
+    - name: Configure sudoers
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL:ALL) NOPASSWD:ALL'

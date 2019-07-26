@@ -1,0 +1,11 @@
+- hosts: ut41
+  tasks:
+    - name: Create Gitlab backup
+      command: gitlab-rake gitlab:backup:create STRATEGY=copy
+      become: yes
+      become_user: a.golubev
+
+    - name: Update Gitlab version
+      command: apt-get update && apt-get install gitlab-ce
+      become: yes
+      become_user: a.golubev

@@ -1,0 +1,33 @@
+- hosts: new-repo3
+  tasks:
+    - name: Configure /etc/sudoers
+      lineinfile:
+        path: /etc/sudoers
+        line: '#includedir /etc/sudoers.d'
+        state: present
+        validate: "/usr/sbin/visudo -cf %s"
+
+    - name: Configure /etc/sudoers.d/agolubev
+      lineinfile:
+        path: /etc/sudoers.d/agolubev
+        line: 'a.golubev ALL=(ALL:ALL) NOPASSWD:ALL'
+        state: present
+        mode: 0440
+        create: yes
+        validate: 'visudo -cf %s'
+
+    - name: Add user a.golubev
+      user:
+        name: a.golubev
+        comment: Artem Golubev
+        groups: sudo
+        append: yes
+        shell: /bin/bash
+        home: /home/a.golubev
+        create_home: yes
+
+    - name: Set authorized key to user a.golubev
+      authorized_key:
+        user: a.golubev
+        state: present
+        key: "{{ lookup('file', '/home/artem/devops/ansible/.ssh/a.golubev.pub') }}"

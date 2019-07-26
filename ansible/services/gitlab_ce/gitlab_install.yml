@@ -1,0 +1,39 @@
+- hosts: all
+  tasks:
+    - name: Install dependencies
+      apt:
+        name: "{{ item }}"
+      loop:
+        - ca-certificates
+        - curl
+        - openssh-server
+        - postfix
+        - rsync
+      become: yes
+
+    - name: Download installation script
+      get_url:
+        url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+        dest: /tmp/
+
+    - name: Run installation script
+      command: bash /tmp/script.deb.sh
+      become: yes
+
+    - name: Install Gitlab CE
+      apt:
+        name: "{{ item }}"
+      loop:
+        - gitlab-ce
+      become: yes
+
+    - name: Configure gitlab.rb
+      lineinfile:
+        path: /etc/gitlab/gitlab.rb
+        regexp: "^external_url 'http://gitlab.example.com'"
+        line: external_url 'http://127.0.0.1'
+      become: yes
+
+    - name: Reconfigure Gitlab
+      command: gitlab-ctl reconfigure
+      become: yes

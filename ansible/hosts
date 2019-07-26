@@ -1,0 +1,10 @@
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[hosts]
+git-repo ansible_host= ansible_user=a.golubev
+
+[gitlab-hosts]
+ut41 ansible_host= ansible_user=a.golubev
+ut42 ansible_host= ansible_user=a.golubev
+ut45 ansible_host= ansible_user=a.golubev
