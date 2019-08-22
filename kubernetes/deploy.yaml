@@ -1,0 +1,11 @@
+- hosts: kubemaster
+  become: yes
+  become_user: kubeadmin
+  tasks:
+    - name: Copy {{ deploy }} deployment file
+      copy:
+        src: deployments/{{ deploy }}.yaml
+        dest: /tmp/
+
+    - name: Deploy {{ deploy }}
+      shell: kubectl create -f /tmp/{{ deploy }}.yaml

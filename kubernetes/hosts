@@ -1,0 +1,7 @@
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[hosts]
+kubemaster ansible_host=192.168.100.150 ansible_user=root
+kube01 ansible_host=192.168.100.151 ansible_user=root
+kube02 ansible_host=192.168.100.152 ansible_user=root

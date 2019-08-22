@@ -1,0 +1,16 @@
+- hosts: kubemaster
+  tasks:
+    - name: Create token
+      shell: kubeadm token create --print-join-command
+      register: join_command_raw
+
+    - name: Set join command
+      set_fact:
+        join_command: "{{ join_command_raw.stdout }}"
+
+
+
+- hosts: kube01, kube02
+  tasks:
+    - name: Join nodes to Kubernetes cluster
+      shell: "{{ hostvars['kubemaster'].join_command }} > nodes_joined.txt"

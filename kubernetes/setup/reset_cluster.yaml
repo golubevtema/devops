@@ -1,0 +1,4 @@
+- hosts: kubernetes
+  tasks:
+    - name: Reset kubernetes cluster
+      shell: yes | kubeadm reset
