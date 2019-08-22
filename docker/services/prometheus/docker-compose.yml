@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+  prometheus:
+    build:
+      context: prometheus_server
+    container_name: prometheus
+    hostname: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - "prometheus_server/prometheus.yml"
+    restart: unless-stopped
+
+  node_exporter:
+    build:
+      context: node_exporter
+    container_name: node_exporter
+    hostname: node_exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+
+  grafana:
+    build:
+      context: grafana
+    container_name: grafana
+    hostname: grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

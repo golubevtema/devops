@@ -1,5 +1,7 @@
 - hosts: all
   tasks:
-    - name: Backup gitlab to local store
+    - name: Backup gitlab: to local store
       command: gitlab-rake gitlab:backup:create STRATEGY=copy
       become: yes
+
+    - name: Backup Gitlab conf files

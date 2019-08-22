@@ -2,9 +2,10 @@
 ansible_python_interpreter=/usr/bin/python3
 
 [hosts]
-git-repo ansible_host= ansible_user=a.golubev
+git-repo ansible_host=142.91.8.228 ansible_user=a.golubev
 
 [gitlab-hosts]
-ut41 ansible_host= ansible_user=a.golubev
-ut42 ansible_host= ansible_user=a.golubev
-ut45 ansible_host= ansible_user=a.golubev
+ut41 ansible_host=10.129.20.41 ansible_user=a.golubev
+ut42 ansible_host=10.129.20.42 ansible_user=a.golubev
+ut43 ansible_host=10.129.20.45 ansible_user=a.golubev
+git-local ansible_host=172.17.0.2 ansible_user=root

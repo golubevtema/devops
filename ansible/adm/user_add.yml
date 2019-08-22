@@ -1,4 +1,4 @@
-- hosts: new-repo3
+- hosts: all
   tasks:
     - name: Configure /etc/sudoers
       lineinfile:

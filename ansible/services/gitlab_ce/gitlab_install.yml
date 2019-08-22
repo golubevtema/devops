@@ -9,6 +9,7 @@
         - openssh-server
         - postfix
         - rsync
+        - tzdata
       become: yes
 
     - name: Download installation script
@@ -28,11 +29,25 @@
       become: yes
 
     - name: Configure gitlab.rb
-      lineinfile:
+      replace:
         path: /etc/gitlab/gitlab.rb
         regexp: "^external_url 'http://gitlab.example.com'"
-        line: external_url 'http://127.0.0.1'
+        replace: external_url 'http://127.0.0.1'
       become: yes
+
+    - name: Configure Gitlab backup path
+      replace:
+        path: /etc/gitlab/gitlab.rb
+        regexp: "^#0gitlab_rails['manage_backup_path'] = true"
+        replace: gitlab_rails['manage_backup_path'] = true
+      become: yes
+
+#    - name: Configure Gitlab manage backup
+#      replace:
+#        path: /etc/gitlab/gitlab.rb
+#        regexp: '# gitlab_rails['backup_path'] = "/var/opt/gitlab/backups"'
+#        replace: gitlab_rails['backup_path'] = "/var/opt/gitlab/backups"
+#      become: yes
 
     - name: Reconfigure Gitlab
       command: gitlab-ctl reconfigure
