@@ -22,9 +22,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
 
 COPY prometheus.yml /etc/prometheus/
 
-EXPOSE 9090
-
 USER prometheus
+
+EXPOSE 9090
 
 CMD ["/usr/local/bin/prometheus_run.sh"]
 

@@ -11,6 +11,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     cp node_exporter-0.18.1.linux-amd64/node_exporter /usr/local/bin && \
     chown node_exporter:node_exporter /usr/local/bin/node_exporter
 
+USER node_exporter
+
 EXPOSE 9100
 
 CMD ["/usr/local/bin/node_exporter"]
