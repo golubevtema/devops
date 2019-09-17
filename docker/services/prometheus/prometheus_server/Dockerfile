@@ -1,13 +1,12 @@
 FROM ubuntu:latest
 
-COPY prometheus.yml /etc/prometheus/
 COPY prometheus_run.sh /usr/local/bin/
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y curl sudo && \
-    useradd --no-create-home --shell /bin/false prometheus && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y curl && \
+    useradd -s /bin/bash -d /home/prometheus -m prometheus && \
     mkdir -p /etc/prometheus && \
     mkdir -p /var/lib/prometheus && \
     cd /tmp && \
@@ -21,7 +20,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     chown -R prometheus:prometheus /var/lib/prometheus && \
     chmod +x /usr/local/bin/prometheus_run.sh
 
+COPY prometheus.yml /etc/prometheus/
+
 EXPOSE 9090
 
-CMD ["prometheus_run.sh"]
+USER prometheus
+
+CMD ["/usr/local/bin/prometheus_run.sh"]
 
