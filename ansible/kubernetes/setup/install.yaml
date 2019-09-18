@@ -59,7 +59,7 @@
         state: present
         update_cache: yes
 
-    - name: Install kubelet, kubeadm on all nodes
+    - name: Install kubelet, kubeadm and kubectl
       apt:
         name: "{{ item }}"
       loop:
