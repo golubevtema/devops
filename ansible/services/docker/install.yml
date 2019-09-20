@@ -1,0 +1,32 @@
+- hosts: all
+  tasks:
+    - name: Add an Docker Apt signing key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      become: yes
+
+    - name: Add Docker CE repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: Install Docker CE
+      apt:
+        name: "{{ item }}"
+      loop:
+        - docker-ce
+        - curl
+      become: yes
+
+    - name: Install docker-compose
+      command: curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      become: yes
+
+    - name: Make docker compose runnable
+      file:
+        path: /usr/local/bin/docker-compose
+        mode: '0755'
+      become: yes

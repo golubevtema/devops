@@ -1,6 +1,9 @@
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 
+[hosts]
+u18 ansible_host=192.168.100.30 ansible_user=artem
+
 [kubernetes]
 kubemaster ansible_host=192.168.100.150 ansible_user=root
 #kube01 ansible_host=192.168.100.151 ansible_user=root
