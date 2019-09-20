@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: kubemaster
   tasks:
     - name: Init Kubernetes cluster
       shell: kubeadm init --pod-network-cidr=10.244.0.0/16 > cluster_initialized.txt
