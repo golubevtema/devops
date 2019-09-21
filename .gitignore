@@ -1,3 +1,4 @@
 .ssh/
 .idea/
 ansible/hosts
+ansible/kubernetes/setup/*.retry
