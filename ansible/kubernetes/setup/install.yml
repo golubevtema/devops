@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: kubernetes
   tasks:
     - name: Add machines to hosts file
       lineinfile:
@@ -6,8 +6,6 @@
         line: "{{ item }}"
       loop:
         - 192.168.100.150 kubemaster
-        - 192.168.100.151 kube01
-        - 192.168.100.150 kube02
 
     - name: Disable swapoff
       shell: swapoff -a

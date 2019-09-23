@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+    - name: Echo ip address
+      debug:
+#        msg: "{{ hostvars['kubernetes'].ansible_host }}"
+        msg: "{{ hostvars['kubernetes'] }}"
