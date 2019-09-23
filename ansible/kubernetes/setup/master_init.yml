@@ -1,7 +1,8 @@
 - hosts: kubemaster
   tasks:
     - name: Init Kubernetes cluster
-      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 > cluster_initialized.txt
+#      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 > cluster_initialized.txt
+      shell: kubeadm init --pod-network-cidr=192.168.0.0/16 > cluster_initialized.txt
 
     - name: Create .kube directory
       become: yes
@@ -17,8 +18,10 @@
         dest: /home/kubeadmin/.kube/config
         remote_src: yes
         owner: kubeadmin
+        group: kubeadmin
 
-    - name: Install Pod network
+    - name: Install Calico pod network
       become: yes
       become_user: kubeadmin
-      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/32a765fd19ba45b387fdc5e3812c41fff47cfd55/Documentation/kube-flannel.yml > pod_network_setup.txt
+#      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/32a765fd19ba45b387fdc5e3812c41fff47cfd55/Documentation/kube-flannel.yml > pod_network_setup.txt
+      shell: kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml > pod_network_setup.txt

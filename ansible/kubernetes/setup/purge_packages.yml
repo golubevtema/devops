@@ -1,0 +1,44 @@
+- hosts: kubernetes
+  tasks:
+    - name: Enable update of kubelet, kubeadm, kubectl packages
+      shell: "apt-mark unhold {{ item }}"
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: Delete kubelet, kubeadm, kubectl packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: Delete docker packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker.io
+
+    - name: Delete additional packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - python-apt
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+
+    - name: Remove /etc/docker directory
+      file:
+        path: /etc/docker
+        state: absent

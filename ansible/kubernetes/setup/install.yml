@@ -1,11 +1,15 @@
 - hosts: kubernetes
   tasks:
+    - name: Set timezone To Europe/Moscow
+      timezone:
+        name: Europe/Moscow
+
     - name: Add machines to hosts file
       lineinfile:
         path: /etc/hosts
         line: "{{ item }}"
       loop:
-        - 192.168.100.150 kubemaster
+        - 10.0.1.150 kubemaster
 
     - name: Disable swapoff
       shell: swapoff -a
@@ -42,14 +46,25 @@
       apt:
         name: "{{ item }}"
       loop:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
+        - docker-ce=18.06.2~ce~3-0~ubuntu
+#        - docker.io
+#        - docker-ce
+#        - docker-ce-cli
+#        - containerd.io
 
     - name: Add an Kubernetes Apt signing key
       apt_key:
         url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
         state: present
+
+    - name: Disable nftables if it used
+      shell: "{{ item }}"
+      loop:
+        - update-alternatives --set iptables /usr/sbin/iptables-legacy
+        - update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+        - update-alternatives --set arptables /usr/sbin/arptables-legacy
+        - update-alternatives --set ebtables /usr/sbin/ebtables-legacy
+      ignore_errors: yes
 
     - name: Add Kubernetes repository
       apt_repository:
@@ -60,6 +75,13 @@
     - name: Install kubelet, kubeadm and kubectl
       apt:
         name: "{{ item }}"
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: Disable update of kubelet, kubeadm, kubectl packages
+      shell: "apt-mark hold {{ item }}"
       loop:
         - kubelet
         - kubeadm

@@ -10,7 +10,7 @@
 
 
 
-- hosts: kube01, kube02
+- hosts: kube01
   tasks:
     - name: Join nodes to Kubernetes cluster
       shell: "{{ hostvars['kubemaster'].join_command }} > nodes_joined.txt"

@@ -2,3 +2,8 @@
   tasks:
     - name: Reset kubernetes cluster
       shell: yes | kubeadm reset
+
+    - name: Remove $HOME/.kube directory
+      file:
+        path: /home/kubeadmin/.kube
+        state: absent
