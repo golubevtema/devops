@@ -4,3 +4,6 @@ ansible_python_interpreter=/usr/bin/python3
 [kubernetes]
 kubemaster ansible_host=127.0.0.1 ansible_user=root ansible_port=2222
 #kube01 ansible_host=127.0.0.1 ansible_user=root ansible_port=2223
+
+[hosts]
+gitlab ansible_host=127.0.0.1 ansible_user=root ansible_port=2224

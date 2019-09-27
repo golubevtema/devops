@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  gitlab:
+    build:
+      context: .
+    container_name: gitlab
+    hostname: gitlab
+    ports:
+      - "80:80"
+    restart: unless-stopped

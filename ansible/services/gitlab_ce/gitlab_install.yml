@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: gitlab
   tasks:
     - name: Install dependencies
       apt:
@@ -35,12 +35,12 @@
         replace: external_url 'http://127.0.0.1'
       become: yes
 
-    - name: Configure Gitlab backup path
-      replace:
-        path: /etc/gitlab/gitlab.rb
-        regexp: "^#0gitlab_rails['manage_backup_path'] = true"
-        replace: gitlab_rails['manage_backup_path'] = true
-      become: yes
+#    - name: Configure Gitlab backup path
+#      replace:
+#        path: /etc/gitlab/gitlab.rb
+#        regexp: "^#0gitlab_rails['manage_backup_path'] = true"
+#        replace: gitlab_rails['manage_backup_path'] = true
+#      become: yes
 
 #    - name: Configure Gitlab manage backup
 #      replace:

@@ -4,8 +4,8 @@
   tasks:
     - name: Copy {{ deploy }} deployment file
       copy:
-        src: deployments/{{ deploy }}.yaml
+        src: deployments/{{ deploy }}.yml
         dest: /tmp/
 
     - name: Deploy {{ deploy }}
-      shell: kubectl create -f /tmp/{{ deploy }}.yaml
+      shell: kubectl apply -f /tmp/{{ deploy }}.yml
